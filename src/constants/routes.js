@@ -24,6 +24,12 @@ export const ROUTES = {
   EXAM_BUILDER: '/exam-builder',
   SETTINGS: '/settings',
   ADMIN: '/admin',
+
+  // Post-registro
+  ALTERNAR_ROYAL_A_NORMAL: '/alternar-royal-a-normal',
+
+  // Impro lab
+  IMPRO_LAB_EXAM_BUILDER: '/lab/exam-builder',
 };
 
 export const getTeacherSessionDetailPath = (sessionId) =>

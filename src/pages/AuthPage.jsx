@@ -20,8 +20,9 @@ export function AuthPage({ initialMode = 'login' }) {
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [registerExiting, setRegisterExiting] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, loginFromRegister } = useAuth();
 
   const redirectAfterLogin = (user) => {
     const role = user?.role;
@@ -60,8 +61,12 @@ export function AuthPage({ initialMode = 'login' }) {
     void regPassword;
     const result = mockRegister(regEmail, regName, regRole);
     if (result.success) {
-      login(result.user);
-      redirectAfterLogin(result.user);
+      // Start exit animation, then navigate to the onboarding scene
+      setRegisterExiting(true);
+      loginFromRegister(result.user);
+      window.setTimeout(() => {
+        navigate(ROUTES.ALTERNAR_ROYAL_A_NORMAL, { replace: true });
+      }, 700);
     } else {
       setError(result.error || 'Registration failed');
     }
@@ -70,7 +75,7 @@ export function AuthPage({ initialMode = 'login' }) {
   return (
     <div className="ls-root">
       <div className="ls-page">
-        <div className={`ls-container ${isRegister ? 'ls-active' : ''}`}>
+        <div className={`ls-container ${isRegister ? 'ls-active' : ''} ${registerExiting ? 'ls-exiting' : ''}`}>
           <div className="ls-formBox ls-login">
             <form className="ls-form" onSubmit={handleLoginSubmit}>
               <h1>Login</h1>
@@ -163,8 +168,8 @@ export function AuthPage({ initialMode = 'login' }) {
                 <i className="bx bxs-id-card" />
               </div>
               {error && isRegister && <div className="ls-error">{error}</div>}
-              <button type="submit" className="ls-btn" disabled={!canSubmit}>
-                Register
+              <button type="submit" className="ls-btn" disabled={!canSubmit || registerExiting}>
+                {registerExiting ? 'Preparing…' : 'Register'}
               </button>
               <p>or register with social platforms</p>
               <div className="ls-socialIcons">

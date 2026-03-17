@@ -6,6 +6,7 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [postRegister, setPostRegister] = useState(false);
 
   useEffect(() => {
     const stored = getStoredUser();
@@ -18,12 +19,23 @@ export function AuthProvider({ children }) {
     setUser(userData);
   };
 
+  const loginFromRegister = (userData) => {
+    setStoredUser(userData);
+    setUser(userData);
+    setPostRegister(true);
+  };
+
+  const clearPostRegister = () => {
+    setPostRegister(false);
+  };
+
   const logout = () => {
     mockLogout();
     setUser(null);
+    setPostRegister(false);
   };
 
-  const value = { user, loading, login, logout };
+  const value = { user, loading, login, loginFromRegister, clearPostRegister, postRegister, logout };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

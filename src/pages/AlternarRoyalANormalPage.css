@@ -1,0 +1,323 @@
+/* AlternarRoyalANormal: escena Three.js a pantalla completa (portal planes + parallax) */
+
+.alternar-royal-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #000;
+}
+
+.alternar-royal-page--fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.alternar-tutorial {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.alternar-tutorial__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  pointer-events: auto;
+}
+
+.alternar-tutorial__panel {
+  position: relative;
+  width: min(860px, calc(100% - 28px));
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  color: #e2e8f0;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.alternar-tutorial__kicker {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-bottom: 6px;
+}
+
+.alternar-tutorial__slide {
+  animation-duration: 220ms;
+  animation-timing-function: ease;
+  animation-fill-mode: both;
+}
+
+.alternar-tutorial__slide--next {
+  animation-name: alternarSlideInRight;
+}
+
+.alternar-tutorial__slide--prev {
+  animation-name: alternarSlideInLeft;
+}
+
+@keyframes alternarSlideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes alternarSlideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.alternar-tutorial__title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.alternar-tutorial__text {
+  font-size: 13px;
+  color: #cbd5e1;
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+
+.alternar-tutorial__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  align-items: center;
+}
+
+.alternar-tutorial__dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 6px 0 12px;
+}
+
+.alternar-tutorial__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.35);
+}
+
+.alternar-tutorial__dot--active {
+  background: rgba(226, 232, 240, 0.9);
+}
+
+.alternar-tutorial__btn {
+  width: 180px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(116, 148, 236, 0.85);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.alternar-tutorial__btn:hover {
+  background: rgba(116, 148, 236, 1);
+}
+
+.alternar-tutorial__btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.alternar-tutorial__btn--ghost {
+  background: rgba(2, 6, 23, 0.35);
+}
+
+.alternar-tutorial__btn--ghost:hover {
+  background: rgba(2, 6, 23, 0.5);
+}
+
+.alternar-tutorial__arrow {
+  width: 18px;
+  height: 18px;
+  display: block;
+  animation: alternarArrowNudge 900ms ease-in-out infinite;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+}
+
+@keyframes alternarArrowNudge {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateX(4px);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .alternar-tutorial__btn {
+    width: 100%;
+  }
+  .alternar-tutorial__actions {
+    justify-content: stretch;
+    flex-direction: column;
+  }
+}
+
+.alternar-royal-dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  pointer-events: none;
+  transition: background 180ms ease;
+  z-index: 1;
+}
+
+.alternar-royal-dim--active {
+  background: rgba(0, 0, 0, 0.75);
+  pointer-events: auto;
+}
+
+.alternar-royal-panel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(520px, calc(100% - 32px));
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  color: #e2e8f0;
+  z-index: 3;
+  backdrop-filter: blur(12px);
+}
+
+.alternar-royal-panel__media {
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(2, 6, 23, 0.35);
+}
+
+.alternar-royal-panel__img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  display: block;
+}
+
+.alternar-royal-panel__title {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.alternar-royal-panel__desc {
+  font-size: 13px;
+  line-height: 1.4;
+  color: #cbd5e1;
+}
+
+.alternar-royal-panel__hint {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.alternar-royal-panel__actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.alternar-royal-panel__btn {
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(116, 148, 236, 0.9);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.alternar-royal-panel__btn:hover {
+  background: rgba(116, 148, 236, 1);
+}
+
+.alternar-royal-labels {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0 20px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.alternar-royal-label {
+  justify-self: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  color: #e2e8f0;
+  font-size: 12px;
+  letter-spacing: 0.2px;
+  text-transform: none;
+  backdrop-filter: blur(10px);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .alternar-royal-labels {
+    grid-template-columns: 1fr;
+    bottom: 14px;
+  }
+  .alternar-royal-label {
+    justify-self: center;
+  }
+}
+
+.alternar-royal-page--fullscreen .portal-planes-scene {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.portal-planes-scene canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}

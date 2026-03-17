@@ -1,20 +1,20 @@
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import { EnvironmentProvider } from './contexts/EnvironmentContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AppRoutes } from './routes';
 
-// Basename para que las rutas coincidan con Vite base (ej. /royalcanvas/)
-const basename = (import.meta.env.BASE_URL || '/').replace(/\/$/, '') || '/';
-
 function App() {
   return (
-    <BrowserRouter basename={basename}>
+    <HashRouter>
       <AuthProvider>
-        <ThemeProvider>
-          <AppRoutes />
-        </ThemeProvider>
+        <EnvironmentProvider>
+          <ThemeProvider>
+            <AppRoutes />
+          </ThemeProvider>
+        </EnvironmentProvider>
       </AuthProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
