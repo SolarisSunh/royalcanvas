@@ -5,7 +5,12 @@ import { useAuth } from '../../contexts/AuthContext';
 import { envToPrefix } from '../../utils/envRouting';
 
 const BASE_URL = import.meta.env.BASE_URL || '/';
-const asset = (p) => `${BASE_URL.replace(/\/$/, '')}${p.startsWith('/') ? p : `/${p}`}`;
+const asset = (p) => {
+  const path = p.startsWith('/') ? p.slice(1) : p;
+  // Ensure we don't generate ".//" or "//" in built apps
+  const base = BASE_URL === './' ? '' : BASE_URL.replace(/\/$/, '');
+  return base ? `${base}/${path}` : `/${path}`;
+};
 
 const teacherNav = [
   { to: ROUTES.TEACHER_HOME, label: 'Inicio' },
