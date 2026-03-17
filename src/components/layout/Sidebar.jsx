@@ -7,9 +7,8 @@ import { envToPrefix } from '../../utils/envRouting';
 const BASE_URL = import.meta.env.BASE_URL || '/';
 const asset = (p) => {
   const path = p.startsWith('/') ? p.slice(1) : p;
-  // Ensure we don't generate ".//" or "//" in built apps
-  const base = BASE_URL === './' ? '' : BASE_URL.replace(/\/$/, '');
-  return base ? `${base}/${path}` : `/${path}`;
+  const base = BASE_URL.replace(/\/$/, '');
+  return `${base}/${path}`;
 };
 
 const teacherNav = [

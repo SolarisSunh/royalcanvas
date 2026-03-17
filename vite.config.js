@@ -4,6 +4,6 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // Use relative assets so it works in any subpath (GitHub Pages, local static hosting, etc.)
-  base: './',
+  // GitHub Pages repo site: https://<user>.github.io/royalcanvas/
+  base: '/royalcanvas/',
 })

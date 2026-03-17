@@ -1,12 +1,14 @@
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { EnvironmentProvider } from './contexts/EnvironmentContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AppRoutes } from './routes';
 
+const basename = (import.meta.env.BASE_URL || '/').replace(/\/$/, '') || '/';
+
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter basename={basename}>
       <AuthProvider>
         <EnvironmentProvider>
           <ThemeProvider>
@@ -14,7 +16,7 @@ function App() {
           </ThemeProvider>
         </EnvironmentProvider>
       </AuthProvider>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

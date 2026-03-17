@@ -10,7 +10,7 @@ import tutorialArrow from '../assets/tutorial-arrow.svg';
 import { envToPrefix } from '../utils/envRouting';
 
 const BASE_URL = import.meta.env.BASE_URL || '/';
-const IMG_DIR = `${(BASE_URL === './' ? '' : BASE_URL.replace(/\/$/, ''))}/AlternarRoyalANormal`.replace(/\/\/+/g, '/');
+const IMG_DIR = `${BASE_URL.replace(/\/$/, '')}/AlternarRoyalANormal`;
 
 const IMAGES = [
   // Coloca estos archivos en: public/AlternarRoyalANormal/
